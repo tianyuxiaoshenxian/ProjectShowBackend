@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.170.105:3306/resident_service?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      max-active: 50
+      min-idle: 1
+      max-wait: 60000
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # MySQL 连接八小时问题
+      validation-query: SELECT 1
+      validation-query-timeout: 60000
+      test-on-borrow: false
+      test-on-return: false
+      # 默认为stat,即开启sql监控。这里加了个wall,表示同时开启sql防火墙
+      filters: stat,wall
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:/ehcache/ehcache.xml
+
+logging:
+  level:
+    root: info
+    com.yidatec.monomer: debug
+
+yidatec:
+  log:
+    enabled: true

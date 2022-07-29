@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidatec.monomer.modules.sys.mapper.SysMenuMapper">
+
+    <select id="getMenus" resultType="com.yidatec.monomer.modules.sys.vo.SysMenuTree">
+        select * from sys_menu
+    </select>
+
+    <select id="getRoleMenuList" resultType="com.yidatec.monomer.modules.sys.vo.SysMenuTree">
+        SELECT a.* FROM sys_menu a
+        LEFT JOIN sys_role_menu b ON a.id = b.menu_id
+        LEFT JOIN sys_role c ON b.role_id = c.id
+        LEFT JOIN sys_user_role d ON c.id = d.role_id
+        LEFT JOIN sys_user e ON d.user_id = e.id
+        <where>
+            e.username = #{userName}
+        </where>
+        ORDER BY a.id,a.parent_id,a.sort
+    </select>
+
+    <select id="getRoleCheckedMenuList" resultType="java.lang.Long">
+        SELECT a.id FROM sys_menu a
+        LEFT JOIN sys_role_menu b ON a.id = b.menu_id
+        LEFT JOIN sys_role c ON b.role_id = c.id
+        LEFT JOIN sys_user_role d ON c.id = d.role_id
+        LEFT JOIN sys_user e ON d.user_id = e.id
+        <where>
+            c.id = #{roleId}
+        </where>
+    </select>
+
+</mapper>

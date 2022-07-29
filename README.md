@@ -1,92 +1,263 @@
-# Resident service backend
+# backend-monomer
 
-居民服务小程序后端
+## 简介
 
-## Getting started
+SpringBoot+MyBatis-Plus的快速开发脚手架，拥有完整的权限管理功能。
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## 技术选型
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+| 技术                   | 版本    | 说明             |
+| ---------------------- | ------- | ---------------- |
+| SpringBoot             | 2.3.0   | 容器+MVC框架     |
+| SpringSecurity         | 5.3.2   | 认证和授权框架   |
+| MyBatis                | 3.5.4   | ORM框架          |
+| MyBatis-Plus           | 3.3.2   | MyBatis增强工具  |
+| MyBatis-Plus Generator | 3.3.2   | 数据层代码生成器 |
+| Swagger-UI             | 2.9.2   | 文档生产工具     |
+| Docker                 | 18.09.0 | 应用容器引擎     |
+| Druid                  | 1.1.10  | 数据库连接池     |
+| JWT                    | 0.9.0   | JWT登录支持      |
+| Lombok                 | 1.18.12 | 简化对象封装工具 |
+| Minio                  | 8.3.0   | 文档文件服务    |
 
-## Add your files
+### 开发规约
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+#### 项目包结构
 
+``` lua
+src
+├── common -- 用于存放通用代码
+|   ├── api -- 通用结果集封装类
+|   ├── config -- 通用配置类
+|   ├── domain -- 通用封装对象
+|   ├── exception -- 全局异常处理相关类
+|   └── service -- 通用业务类
+├── config -- SpringBoot中的Java配置
+├── domain -- 共用封装对象
+├── generator -- MyBatis-Plus代码生成器
+├── modules -- 存放业务代码的基础包
+|   └── ums -- 权限管理模块业务代码
+|       ├── controller -- 该模块相关接口
+|       ├── dto -- 该模块数据传输封装对象
+|       ├── mapper -- 该模块相关Mapper接口
+|       ├── model -- 该模块相关实体类
+|       └── service -- 该模块相关业务处理类
+└── security -- SpringSecurity认证授权相关代码
+    ├── annotation -- 相关注解
+    ├── aspect -- 相关切面
+    ├── component -- 认证授权相关组件
+    ├── config -- 相关配置
+    └── util -- 相关工具类
 ```
-cd existing_repo
-git remote add origin http://192.168.170.30/resident-services/resident-service-backend.git
-git branch -M main
-git push -uf origin main
+
+#### 资源文件说明
+
+``` lua
+resources
+├── mapper -- MyBatis中mapper.xml存放位置
+├── application.yml -- SpringBoot通用配置文件
+├── application-dev.yml -- SpringBoot开发环境配置文件
+├── application-prod.yml -- SpringBoot生产环境配置文件
+└── generator.properties -- MyBatis-Plus代码生成器配置
 ```
 
-## Integrate with your tools
+#### 接口定义规则
 
-- [ ] [Set up project integrations](http://192.168.170.30/resident-services/resident-service-backend/-/settings/integrations)
+- 创建表记录：POST /{控制器路由名称}/create
 
-## Collaborate with your team
+- 修改表记录：POST /{控制器路由名称}/update/{id}
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- 删除指定表记录：POST /{控制器路由名称}/delete/{id}
 
-## Test and Deploy
+- 分页查询表记录：GET /{控制器路由名称}/list
 
-Use the built-in continuous integration in GitLab.
+- 获取指定记录详情：GET /{控制器路由名称}/{id}
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- 具体参数及返回结果定义可以运行代码查看Swagger-UI的Api文档：http://localhost:8080/swagger-ui.html
 
-***
+### 项目运行
 
-# Editing this README
+直接运行启动类`MallTinyApplication`的`main`函数即可。
+****
+### 业务代码开发流程
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+##### 单表查询
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+> 由于MyBatis-Plus提供的增强功能相当强大，单表查询几乎不用手写SQL，直接使用ServiceImpl和BaseMapper中提供的方法即可。
+比如我们的菜单管理业务实现类`UmsMenuServiceImpl`中的方法都直接使用了这些方法。
 
-## Name
-Choose a self-explaining name for your project.
+```java
+/**
+ * 后台菜单管理Service实现类
+ */
+@Service
+public class UmsMenuServiceImpl extends ServiceImpl<UmsMenuMapper,UmsMenu>implements UmsMenuService {
+    @Override
+    public boolean create(UmsMenu umsMenu) {
+        umsMenu.setCreateTime(new Date());
+        updateLevel(umsMenu);
+        return save(umsMenu);
+    }
+    @Override
+    public boolean update(Long id, UmsMenu umsMenu) {
+        umsMenu.setId(id);
+        updateLevel(umsMenu);
+        return updateById(umsMenu);
+    }
+    @Override
+    public Page<UmsMenu> list(Long parentId, Integer pageSize, Integer pageNum) {
+        Page<UmsMenu> page = new Page<>(pageNum,pageSize);
+        QueryWrapper<UmsMenu> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(UmsMenu::getParentId,parentId)
+                .orderByDesc(UmsMenu::getSort);
+        return page(page,wrapper);
+    }
+    @Override
+    public List<UmsMenuNode> treeList() {
+        List<UmsMenu> menuList = list();
+        List<UmsMenuNode> result = menuList.stream()
+                .filter(menu -> menu.getParentId().equals(0L))
+                .map(menu -> covertMenuNode(menu, menuList)).collect(Collectors.toList());
+        return result;
+    }
+    @Override
+    public boolean updateHidden(Long id, Integer hidden) {
+        UmsMenu umsMenu = new UmsMenu();
+        umsMenu.setId(id);
+        umsMenu.setHidden(hidden);
+        return updateById(umsMenu);
+    }
+}
+```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+##### 分页查询
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+> 对于分页查询MyBatis-Plus原生支持，不需要再整合其他插件，直接构造Page对象，然后调用ServiceImpl中的page方法即可。
+```java
+/**
+ * 后台菜单管理Service实现类
+ */
+@Service
+public class UmsMenuServiceImpl extends ServiceImpl<UmsMenuMapper,UmsMenu>implements UmsMenuService {
+    @Override
+    public Page<UmsMenu> list(Long parentId, Integer pageSize, Integer pageNum) {
+        Page<UmsMenu> page = new Page<>(pageNum,pageSize);
+        QueryWrapper<UmsMenu> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(UmsMenu::getParentId,parentId)
+                .orderByDesc(UmsMenu::getSort);
+        return page(page,wrapper);
+    }
+}
+```
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+##### 多表查询
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+> 对于多表查询，我们需要手写mapper.xml中的SQL实现，由于之前我们已经生成了mapper.xml文件，所以我们直接在Mapper接口中定义好方法，然后在mapper.xml写好SQL实现即可。
+- 比如说我们需要写一个根据用户ID获取其分配的菜单的方法，首先我们在`UmsMenuMapper`接口中添加好`getMenuList`方法；
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```java
+/**
+ * <p>
+ * 后台菜单表 Mapper 接口
+ * </p>
+ *
+ */
+public interface UmsMenuMapper extends BaseMapper<UmsMenu> {
+    /**
+     * 根据后台用户ID获取菜单
+     */
+    List<UmsMenu> getMenuList(@Param("adminId") Long adminId);
+}
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+- 然后在`UmsMenuMapper.xml`添加该方法的对应SQL实现即可。
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.modules.ums.mapper.UmsMenuMapper">
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+    <select id="getMenuList" resultType="com.macro.mall.tiny.modules.ums.model.UmsMenu">
+        SELECT
+            m.id id,
+            m.parent_id parentId,
+            m.create_time createTime,
+            m.title title,
+            m.level level,
+            m.sort sort,
+            m.name name,
+            m.icon icon,
+            m.hidden hidden
+        FROM
+            ums_admin_role_relation arr
+                LEFT JOIN ums_role r ON arr.role_id = r.id
+                LEFT JOIN ums_role_menu_relation rmr ON r.id = rmr.role_id
+                LEFT JOIN ums_menu m ON rmr.menu_id = m.id
+        WHERE
+            arr.admin_id = #{adminId}
+          AND m.id IS NOT NULL
+        GROUP BY
+            m.id
+    </select>
+    
+</mapper>
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### 项目部署
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+集成了Docker插件，可以打包成Docker镜像来部署。
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### 其他说明
 
-## License
-For open source projects, say how it is licensed.
+#### SpringSecurity相关
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+> 由于使用了SpringSecurity来实现认证和授权，部分接口需要token才可以访问，访问需要认证授权接口流程如下。
+- 访问Swagger-UI接口文档：http://localhost:8080/swagger-ui.html
+
+
+#### 请求参数校验
+
+> 默认集成了`Jakarta Bean Validation`参数校验框架，只需在参数对象属性中添加`javax.validation.constraints`包中的注解注解即可实现校验功能，这里以登录参数校验为例。
+- 首先在登录请求参数中添加`@NotEmpty`注解；
+
+```java
+/**
+ * 用户登录参数
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class UmsAdminLoginParam {
+    @NotEmpty
+    @ApiModelProperty(value = "用户名",required = true)
+    private String username;
+    @NotEmpty
+    @ApiModelProperty(value = "密码",required = true)
+    private String password;
+}
+```
+
+- 然后在登录接口中添加`@Validated`注解开启参数校验功能即可。
+
+```java
+/**
+ * 后台用户管理
+ */
+@Controller
+@Api(tags = "UmsAdminController", description = "后台用户管理")
+@RequestMapping("/admin")
+public class UmsAdminController {
+    @ApiOperation(value = "登录以后返回token")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
+        String token = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
+        if (token == null) {
+            return CommonResult.validateFailed("用户名或密码错误");
+        }
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
+        return CommonResult.success(tokenMap);
+    }
+}
+```
