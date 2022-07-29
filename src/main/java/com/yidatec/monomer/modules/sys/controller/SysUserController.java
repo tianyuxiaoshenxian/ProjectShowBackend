@@ -55,6 +55,7 @@ public class SysUserController{
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
+        tokenMap.put("userName",sysUserLoginParam.getUsername());
         return CommonResult.success(tokenMap);
     }
 

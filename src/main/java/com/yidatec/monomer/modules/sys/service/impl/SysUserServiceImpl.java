@@ -123,7 +123,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(SysUser::getUsername,username);
         List<SysUser> adminList = list(wrapper);
-        return adminList.get(0);
+        if(adminList.size()>0){
+            return adminList.get(0);
+        }else {
+            return null;
+        }
+
     }
 
     @Override
