@@ -14,13 +14,19 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public interface SysUserService extends IService<SysUser> {
 
-    SysUser register(SysUserParam user);
+    SysUser add(SysUserParam user);
 
     SysUser modify(SysUserEditParam user);
 
-    boolean delete(Long id);
-
-    Page<SysUser> list(String keyword, Integer pageSize, Integer pageNum);
+    Page<SysUser> list(
+            String realName,
+            String username,
+            String email,
+            String mobile,
+            Integer sex,
+            Integer status,
+            Integer pageSize,
+            Integer pageNum);
 
     SysUser getUserDetail(String id);
 
@@ -28,13 +34,16 @@ public interface SysUserService extends IService<SysUser> {
      * 根据用户名获取后台管理员
      */
     SysUser getAdminByUsername(String username);
+
     /**
      * 登录功能
+     *
      * @param username 用户名
      * @param password 密码
      * @return 生成的JWT的token
      */
-    String login(String username,String password);
+    String login(String username, String password);
+
     /**
      * 获取用户信息
      */
@@ -42,5 +51,8 @@ public interface SysUserService extends IService<SysUser> {
 
     Boolean userIsExist(String username);
 
-    Boolean editPassword(String username,String password);
+    Boolean editPassword(String username, String password);
+
+    Boolean mobileIsExist(String mobile);
+
 }

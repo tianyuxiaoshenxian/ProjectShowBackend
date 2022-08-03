@@ -26,13 +26,14 @@ import static com.yidatec.monomer.common.constant.Const._DEFAULT_PAGE_SIZE;
 
 /**
  * 后台用户管理
+ *
  * @author xudk
  * @since 2022-05-24
  */
 @RestController
 @Api(tags = "SysUserController", description = "用户管理")
 @RequestMapping("/sys/user")
-public class SysUserController{
+public class SysUserController {
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
@@ -55,16 +56,21 @@ public class SysUserController{
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
-        tokenMap.put("userName",sysUserLoginParam.getUsername());
+        tokenMap.put("userName", sysUserLoginParam.getUsername());
         return CommonResult.success(tokenMap);
     }
 
     @ApiOperation(value = "查询用户列表")
     @GetMapping(value = "/list")
-    public CommonResult<CommonPage<SysUser>> list(@RequestParam(value = "name", required = false) String name,
-                                                   @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
-                                                   @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<SysUser> userList = sysUserService.list(name, pageSize, pageNum);
+    public CommonResult<CommonPage<SysUser>> list(@RequestParam(value = "realName", required = false) String realName,
+                                                  @RequestParam(value = "username", required = false) String username,
+                                                  @RequestParam(value = "email", required = false) String email,
+                                                  @RequestParam(value = "mobile", required = false) String mobile,
+                                                  @RequestParam(value = "sex", required = false) Integer sex,
+                                                  @RequestParam(value = "status", required = false) Integer status,
+                                                  @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
+                                                  @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
+        Page<SysUser> userList = sysUserService.list(realName, username, email, mobile, sex, status, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(userList));
     }
 
@@ -73,7 +79,7 @@ public class SysUserController{
     public CommonResult<CommonPage<SysUserRoleVo>> listByRole(@RequestParam(value = "role") String role,
                                                               @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
                                                               @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<SysUserRoleVo> userList  = sysUserCustomerService.listByRole(role, pageSize, pageNum);
+        Page<SysUserRoleVo> userList = sysUserCustomerService.listByRole(role, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(userList));
     }
 
@@ -86,7 +92,7 @@ public class SysUserController{
     @ApiOperation(value = "添加用户")
     @PostMapping(value = "/add")
     public CommonResult<SysUser> add(@Validated @RequestBody SysUserParam sysUserParam) {
-        SysUser user = sysUserService.register(sysUserParam);
+        SysUser user = sysUserService.add(sysUserParam);
         if (null == user) {
             return CommonResult.failed();
         }
@@ -95,7 +101,7 @@ public class SysUserController{
 
     @ApiOperation(value = "修改用户")
     @PostMapping(value = "/edit")
-    public CommonResult<SysUser> edit(@Validated @RequestBody SysUserEditParam sysUserEditParam){
+    public CommonResult<SysUser> edit(@Validated @RequestBody SysUserEditParam sysUserEditParam) {
         SysUser user = sysUserService.modify(sysUserEditParam);
         if (null == user) {
             return CommonResult.failed();
@@ -105,19 +111,19 @@ public class SysUserController{
 
     @ApiOperation(value = "删除用户")
     @PostMapping(value = "/delete/{id}")
-    public CommonResult delete(@PathVariable Long id){
-        boolean result = sysUserService.delete(id);
-        if(result){
+    public CommonResult delete(@PathVariable Long id) {
+        boolean result = sysUserService.removeById(id);
+        if (result) {
             return CommonResult.success(null);
-        }else{
+        } else {
             return CommonResult.failed();
         }
     }
 
     @ApiOperation(value = "修改密码")
     @PostMapping(value = "/editPassword")
-    public CommonResult<SysUser> editPassword(@Validated @RequestBody SysUserEditPasswordParam sysUserEditPasswordParam){
-        Boolean result = sysUserService.editPassword(sysUserEditPasswordParam.getUsername(),sysUserEditPasswordParam.getPassword());
+    public CommonResult<SysUser> editPassword(@Validated @RequestBody SysUserEditPasswordParam sysUserEditPasswordParam) {
+        Boolean result = sysUserService.editPassword(sysUserEditPasswordParam.getUsername(), sysUserEditPasswordParam.getPassword());
         if (!result) {
             return CommonResult.failed();
         }
