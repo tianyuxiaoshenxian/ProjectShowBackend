@@ -29,7 +29,7 @@ public class AppletUserParam {
     @ApiModelProperty(value = "出生日期")
     private Date birthday;
     @ApiModelProperty(value = "身份证号")
-    private Integer idCard;
+    private String idCard;
     @ApiModelProperty(value = "省")
     private String province;
     @ApiModelProperty(value = "市")

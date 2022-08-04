@@ -47,7 +47,7 @@ public class AppletUser implements Serializable {
     private  Date birthday;
 
     @ApiModelProperty(value = "身份证号")
-    private Integer idCard;
+    private String idCard;
 
     @ApiModelProperty(value = "省")
     private String province;
