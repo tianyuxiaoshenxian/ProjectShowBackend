@@ -21,7 +21,7 @@ public class SysDictParam {
     @ApiModelProperty(value = "字典名称")
     private String name;
     @ApiModelProperty(value = "字典类型")
-    private Long type;
+    private String type;
     @ApiModelProperty(value = "字典码")
     private String code;
     @ApiModelProperty(value = "字典值")

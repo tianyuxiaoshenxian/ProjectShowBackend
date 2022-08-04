@@ -56,6 +56,14 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     }
 
     @Override
+    public List<SysDict> fidList() {
+        QueryWrapper<SysDict> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(SysDict::getFid, FID)
+                .eq(SysDict::getDel, DEL);
+        return list(wrapper);
+    }
+
+    @Override
     public Page<SysDict> list(String name, Integer type, Integer code, String value, String remark, Integer pageSize, Integer pageNum) {
         Page<SysDict> page = new Page<>(pageNum, pageSize);
         QueryWrapper<SysDict> wrapper = new QueryWrapper<>();

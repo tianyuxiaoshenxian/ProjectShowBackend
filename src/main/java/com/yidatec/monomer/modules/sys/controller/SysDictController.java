@@ -46,6 +46,12 @@ public class SysDictController {
         return CommonResult.success(sysDictService.getDictByType(type));
     }
 
+    @ApiOperation(value = "查询父级列表")
+    @GetMapping(value = "/fidList")
+    public CommonResult<List<SysDict>> fidList() {
+        return CommonResult.success(sysDictService.fidList());
+    }
+
     @ApiOperation(value = "查询字典列表")
     @GetMapping(value = "/list")
     public CommonResult<CommonPage<SysDict>> list(

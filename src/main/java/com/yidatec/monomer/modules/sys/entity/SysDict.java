@@ -28,7 +28,7 @@ public class SysDict extends AbstractEntity {
     private String name;
 
     @ApiModelProperty(value = "字典类型")
-    private Long type;
+    private String type;
 
     @ApiModelProperty(value = "字典码")
     private String code;
@@ -45,6 +45,4 @@ public class SysDict extends AbstractEntity {
     @ApiModelProperty(value = "删除状态：0->正常；1->已删除")
     private Integer del;
 
-    @ApiModelProperty(value = "版本号")
-    private Integer version;
 }

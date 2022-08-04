@@ -20,6 +20,8 @@ public interface SysDictService extends IService<SysDict> {
 
     List<SysDict> getDictByType(Long type);
 
+    List<SysDict> fidList();
+
     Page<SysDict> list(String name, Integer type, Integer code, String value, String remark, Integer pageSize, Integer pageNum);
 
     SysDict addSysDict(SysDictParam sysDictParam);
