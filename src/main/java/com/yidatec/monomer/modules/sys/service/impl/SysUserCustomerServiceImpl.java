@@ -24,9 +24,6 @@ public class SysUserCustomerServiceImpl extends ServiceImpl<SysUserRoleVoMapper,
     @Override
     public Page<SysUserRoleVo> listByRole(String role, Integer pageSize, Integer pageNum) {
         Page<SysUserRoleVo> page = new Page<>(pageNum, pageSize);
-        //QueryWrapper<SysUserRoleVo> wrapper = new QueryWrapper<>();
-        //wrapper.eq("b.id",role);
-        //return sysUserRoleVoMapper.findByPage(page,wrapper);
         return sysUserRoleVoMapper.findByPage(page, role);
     }
 }

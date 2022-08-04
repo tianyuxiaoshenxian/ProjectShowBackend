@@ -15,6 +15,9 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Setter
 public class SysUserRoleVo {
+
+    @ApiModelProperty(value = "id")
+    private Long id;
     @NotEmpty
     @ApiModelProperty(value = "账号", required = true)
     private String username;

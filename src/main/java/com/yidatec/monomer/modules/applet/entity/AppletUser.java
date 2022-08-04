@@ -50,10 +50,13 @@ public class AppletUser implements Serializable {
     private Integer idCard;
 
     @ApiModelProperty(value = "省")
-    private Integer province;
+    private String province;
 
     @ApiModelProperty(value = "市")
-    private Integer city;
+    private String city;
+
+    @ApiModelProperty(value = "区")
+    private String district;
 
     @ApiModelProperty(value = "详细地址")
     private String detailAddress;

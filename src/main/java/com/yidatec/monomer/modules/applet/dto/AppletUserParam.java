@@ -31,9 +31,9 @@ public class AppletUserParam {
     @ApiModelProperty(value = "身份证号")
     private Integer idCard;
     @ApiModelProperty(value = "省")
-    private Integer province;
+    private String province;
     @ApiModelProperty(value = "市")
-    private Integer city;
+    private String city;
     @ApiModelProperty(value = "详细地址")
     private String detailAddress;
 }
