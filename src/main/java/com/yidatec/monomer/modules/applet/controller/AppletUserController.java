@@ -33,9 +33,13 @@ public class AppletUserController {
     @ApiOperation(value = "查询会员")
     @GetMapping(value = "/list")
     public CommonResult<CommonPage<AppletUser>> list(
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "realName", required = false) String realName,
+            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+            @RequestParam(value = "idCard", required = false) String idCard,
             @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<AppletUser> appletUserPage = appletUserService.list(pageSize, pageNum);
+        Page<AppletUser> appletUserPage = appletUserService.list(username,realName,phoneNumber,idCard,pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(appletUserPage));
     }
 

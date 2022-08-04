@@ -29,9 +29,13 @@ public class AppletUserServiceImpl extends ServiceImpl<AppletUserMapper, AppletU
     private static final Logger LOGGER = LoggerFactory.getLogger(AppletUserServiceImpl.class);
 
     @Override
-    public Page<AppletUser> list(Integer pageSize, Integer pageNum) {
+    public Page<AppletUser> list(String username, String realName, String phoneNumber, String idCard,Integer pageSize, Integer pageNum) {
         Page<AppletUser> page = new Page<>(pageNum, pageSize);
         QueryWrapper<AppletUser> wrapper = new QueryWrapper<>();
+        wrapper.like(StrUtil.isNotEmpty(username), "username", username)
+                .like(StrUtil.isNotEmpty(realName),"real_name",realName)
+                .like(StrUtil.isNotEmpty(phoneNumber),"phone_number",phoneNumber)
+                .like(StrUtil.isNotEmpty(idCard),"id_card",idCard);
         return page(page, wrapper);
     }
 

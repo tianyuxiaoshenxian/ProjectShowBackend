@@ -7,6 +7,7 @@ import com.yidatec.monomer.modules.applet.dto.SiteEditParam;
 import com.yidatec.monomer.modules.applet.dto.SiteParam;
 import com.yidatec.monomer.modules.applet.entity.AppletUser;
 import com.yidatec.monomer.modules.applet.entity.Site;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * <p>
@@ -18,7 +19,7 @@ import com.yidatec.monomer.modules.applet.entity.Site;
  */
 public interface AppletUserService extends IService<AppletUser> {
 
-    Page<AppletUser> list(Integer pageSize, Integer pageNum);
+    Page<AppletUser> list(String username, String realName, String phoneNumber, String idCard,Integer pageSize, Integer pageNum);
 
     AppletUser register(AppletUserParam appletUserParam);
 

@@ -42,14 +42,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private SysRoleMenuService sysRoleMenuService;
 
     @Override
-    public Page<SysRole> list(String keyword, Integer pageSize, Integer pageNum) {
+    public Page<SysRole> list(String roleName, String roleCode, Integer pageSize, Integer pageNum) {
         Page<SysRole> page = new Page<>(pageNum, pageSize);
         QueryWrapper<SysRole> wrapper = new QueryWrapper<>();
-        LambdaQueryWrapper<SysRole> lambda = wrapper.lambda();
-        if (StrUtil.isNotEmpty(keyword)) {
-            lambda.like(SysRole::getRoleName, keyword);
-            lambda.or().like(SysRole::getRoleCode, keyword);
-        }
+        wrapper.like(StrUtil.isNotEmpty(roleName), "role_name", roleName)
+                .like(StrUtil.isNotEmpty(roleCode), "role_code", roleCode);
         return page(page, wrapper);
     }
 

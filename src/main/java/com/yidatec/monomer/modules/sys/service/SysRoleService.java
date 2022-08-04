@@ -15,7 +15,7 @@ import com.yidatec.monomer.modules.sys.entity.SysRole;
  */
 public interface SysRoleService extends IService<SysRole> {
 
-    Page<SysRole> list(String keyword, Integer pageSize, Integer pageNum);
+    Page<SysRole> list(String roleName,String roleCode,Integer pageSize, Integer pageNum);
 
     SysRole add(SysRoleParam sysRoleParam);
 

@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class SysUserParam {
     @NotEmpty
-    @UserUnique
+    @UserUnique(message = "用户名重复")
     @ApiModelProperty(value = "用户名", required = true)
     private String username;
     @NotEmpty
@@ -31,7 +31,7 @@ public class SysUserParam {
     @ApiModelProperty(value = "邮箱")
     private String email;
     @NotEmpty
-    @MobileUnique
+    @MobileUnique(message = "手机号重复")
     @ApiModelProperty(value = "手机")
     private String mobile;
     @NotNull

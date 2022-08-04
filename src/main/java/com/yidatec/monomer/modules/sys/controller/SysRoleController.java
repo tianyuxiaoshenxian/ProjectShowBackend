@@ -32,10 +32,11 @@ public class SysRoleController {
 
     @ApiOperation(value = "查询角色列表")
     @GetMapping(value = "/list")
-    public CommonResult<CommonPage<SysRole>> list(@RequestParam(value = "keyWord", required = false) String keyWord,
+    public CommonResult<CommonPage<SysRole>> list(@RequestParam(value = "keyWord", required = false) String roleName,
+                                                  @RequestParam(value = "roleCode", required = false) String roleCode,
                                                   @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
                                                   @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<SysRole> userList = sysRoleService.list(keyWord, pageSize, pageNum);
+        Page<SysRole> userList = sysRoleService.list(roleName,roleCode, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(userList));
     }
 
