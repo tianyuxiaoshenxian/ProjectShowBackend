@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_user")
-@ApiModel(value="SysUser对象", description="后台用户表")
+@ApiModel(value = "SysUser对象", description = "后台用户表")
 public class SysUser extends AbstractEntity {
 
     @ApiModelProperty(value = "用户名")

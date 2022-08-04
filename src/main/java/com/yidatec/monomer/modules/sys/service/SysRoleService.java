@@ -6,10 +6,10 @@ import com.yidatec.monomer.modules.sys.dto.SysRoleBindUserParam;
 import com.yidatec.monomer.modules.sys.dto.SysRoleEditParam;
 import com.yidatec.monomer.modules.sys.dto.SysRoleParam;
 import com.yidatec.monomer.modules.sys.entity.SysRole;
-import com.yidatec.monomer.modules.sys.entity.SysUser;
 
 /**
  * 后台管理橘色管理Service
+ *
  * @author xudk
  * @since 2022-05-24
  */
@@ -22,4 +22,6 @@ public interface SysRoleService extends IService<SysRole> {
     SysRole modify(SysRoleEditParam sysRoleEditParam);
 
     boolean roleBindUsers(SysRoleBindUserParam sysRoleBindUserParam);
+
+    boolean delete(Long id);
 }

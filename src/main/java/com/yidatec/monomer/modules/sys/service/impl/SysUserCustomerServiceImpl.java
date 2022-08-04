@@ -1,6 +1,5 @@
 package com.yidatec.monomer.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yidatec.monomer.modules.sys.mapper.SysUserRoleVoMapper;
@@ -12,6 +11,7 @@ import javax.annotation.Resource;
 
 /**
  * 后台管理员管理Service实现类
+ *
  * @author xudk
  * @since 2022-05-24
  */
@@ -23,10 +23,10 @@ public class SysUserCustomerServiceImpl extends ServiceImpl<SysUserRoleVoMapper,
 
     @Override
     public Page<SysUserRoleVo> listByRole(String role, Integer pageSize, Integer pageNum) {
-        Page<SysUserRoleVo> page = new Page<>(pageNum,pageSize);
+        Page<SysUserRoleVo> page = new Page<>(pageNum, pageSize);
         //QueryWrapper<SysUserRoleVo> wrapper = new QueryWrapper<>();
         //wrapper.eq("b.id",role);
         //return sysUserRoleVoMapper.findByPage(page,wrapper);
-        return sysUserRoleVoMapper.findByPage(page,role);
+        return sysUserRoleVoMapper.findByPage(page, role);
     }
 }

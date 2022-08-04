@@ -34,6 +34,7 @@ import java.util.List;
 
 /**
  * 后台管理员管理Service实现类
+ *
  * @author xudk
  * @since 2022-05-24
  */
@@ -113,14 +114,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(SysUser::getMobile, sysUserEditParam.getMobile())
                 .ne(SysUser::getId, sysUserEditParam.getId());
-        if (baseMapper.selectOne(wrapper) != null) {
+        if (list(wrapper).size() > 0) {
             LOGGER.error("手机号重复！");
             return null;
         }
 
         wrapper.lambda().eq(SysUser::getUsername, sysUserEditParam.getUsername())
                 .ne(SysUser::getId, sysUserEditParam.getId());
-        if (baseMapper.selectOne(wrapper) != null) {
+        if (list(wrapper).size() > 0) {
             LOGGER.error("用户名重复！");
             return null;
         }

@@ -39,7 +39,7 @@ public class SysRoleController {
         return CommonResult.success(CommonPage.restPage(userList));
     }
 
-    @ApiOperation(value = "添加用户")
+    @ApiOperation(value = "添加角色")
     @PostMapping(value = "/add")
     public CommonResult<SysRole> add(@Validated @RequestBody SysRoleParam sysRoleParam) {
         SysRole role = sysRoleService.add(sysRoleParam);
@@ -49,7 +49,7 @@ public class SysRoleController {
         return CommonResult.success(role);
     }
 
-    @ApiOperation(value = "修改用户")
+    @ApiOperation(value = "修改角色")
     @PostMapping(value = "/edit")
     public CommonResult<SysRole> edit(@Validated @RequestBody SysRoleEditParam sysRoleEditParam){
         SysRole user = sysRoleService.modify(sysRoleEditParam);
@@ -57,6 +57,17 @@ public class SysRoleController {
             return CommonResult.failed();
         }
         return CommonResult.success(user);
+    }
+
+    @ApiOperation(value = "删除角色")
+    @PostMapping(value = "/delete/{id}")
+    public CommonResult delete(@PathVariable Long id) {
+        boolean result = sysRoleService.delete(id);
+        if (result) {
+            return CommonResult.success(null);
+        } else {
+            return CommonResult.failed();
+        }
     }
 
     @ApiOperation(value = "角色绑定用户")

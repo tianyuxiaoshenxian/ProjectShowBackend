@@ -2,10 +2,8 @@ package com.yidatec.monomer.modules.sys.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yidatec.monomer.modules.sys.entity.SysUserRole;
 import com.yidatec.monomer.modules.sys.vo.SysUserRoleVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,5 +17,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface SysUserRoleVoMapper extends BaseMapper<SysUserRoleVo> {
     Page<SysUserRoleVo> findByPage(Page<SysUserRoleVo> page, @Param(Constants.WRAPPER) Wrapper<SysUserRoleVo> wrapper);
+
     Page<SysUserRoleVo> findByPage(Page<SysUserRoleVo> page, String role);
 }

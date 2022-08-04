@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yidatec.monomer.modules.sys.mapper.SiteMapper">
+<mapper namespace="com.yidatec.monomer.modules.applet.mapper.SiteMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yidatec.monomer.modules.sys.model.Site">
-        <id column="id" property="id" />
+    <resultMap id="BaseResultMap" type="com.yidatec.monomer.modules.applet.entity.Site">
         <result column="hospital_name" property="hospitalName" />
         <result column="hospital_num" property="hospitalNum" />
         <result column="hospital_bar_code" property="hospitalBarCode" />
@@ -12,10 +11,6 @@
         <result column="city" property="city" />
         <result column="district" property="district" />
         <result column="detail_address" property="detailAddress" />
-        <result column="create_user" property="createUser" />
-        <result column="create_time" property="createTime" />
-        <result column="update_user" property="updateUser" />
-        <result column="update_time" property="updateTime" />
         <result column="del" property="del" />
     </resultMap>
 

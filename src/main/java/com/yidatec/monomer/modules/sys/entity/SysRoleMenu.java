@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_role_menu")
-@ApiModel(value="SysRoleMenu对象", description="后台角色菜单表")
+@ApiModel(value = "SysRoleMenu对象", description = "后台角色菜单表")
 public class SysRoleMenu extends AbstractEntity {
 
     @ApiModelProperty(value = "角色ID")

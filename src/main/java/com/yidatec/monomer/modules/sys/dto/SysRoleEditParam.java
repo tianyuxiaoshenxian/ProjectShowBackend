@@ -4,11 +4,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
  * 角色修改参数
+ *
  * @author xudk
  * @since 2022-05-24
  */

@@ -18,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Constraint(validatedBy = UserUniqueValidator.class)
 public @interface UserUnique {
-    String message() default "用户账号重复";
+    String message() default "账号重复";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

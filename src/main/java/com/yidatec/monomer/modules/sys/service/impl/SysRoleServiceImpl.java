@@ -19,17 +19,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * 后台管理员管理Service实现类
+ *
  * @author xudk
  * @since 2022-05-24
  */
@@ -45,14 +43,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public Page<SysRole> list(String keyword, Integer pageSize, Integer pageNum) {
-        Page<SysRole> page = new Page<>(pageNum,pageSize);
+        Page<SysRole> page = new Page<>(pageNum, pageSize);
         QueryWrapper<SysRole> wrapper = new QueryWrapper<>();
         LambdaQueryWrapper<SysRole> lambda = wrapper.lambda();
-        if(StrUtil.isNotEmpty(keyword)){
-            lambda.like(SysRole::getRoleName,keyword);
-            lambda.or().like(SysRole::getRoleCode,keyword);
+        if (StrUtil.isNotEmpty(keyword)) {
+            lambda.like(SysRole::getRoleName, keyword);
+            lambda.or().like(SysRole::getRoleCode, keyword);
         }
-        return page(page,wrapper);
+        return page(page, wrapper);
     }
 
     @Override
@@ -60,8 +58,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public SysRole add(SysRoleParam sysRoleParam) {
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(sysRoleParam, sysRole);
-        if(save(sysRole)){
-            addOrDelMenus(sysRole.getId(),sysRoleParam.getAddMenuIds(),sysRoleParam.getDelMenuIds());
+        if (save(sysRole)) {
+            addOrDelMenus(sysRole.getId(), sysRoleParam.getAddMenuIds(), sysRoleParam.getDelMenuIds());
         }
         return sysRole;
     }
@@ -71,8 +69,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public SysRole modify(SysRoleEditParam sysRoleEditParam) {
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(sysRoleEditParam, sysRole);
-        if(updateById(sysRole)){
-            addOrDelMenus(sysRole.getId(),sysRoleEditParam.getAddMenuIds(),sysRoleEditParam.getDelMenuIds());
+        if (updateById(sysRole)) {
+            addOrDelMenus(sysRole.getId(), sysRoleEditParam.getAddMenuIds(), sysRoleEditParam.getDelMenuIds());
         }
         return sysRole;
     }
@@ -80,9 +78,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     @Transactional
     public boolean roleBindUsers(SysRoleBindUserParam sysRoleBindUserParam) {
-        if(sysRoleBindUserParam.getAddUserList().size() > 0){
+        if (sysRoleBindUserParam.getAddUserList().size() > 0) {
             List<SysUserRole> addUserRoles = sysRoleBindUserParam.getAddUserList()
-                    .stream().map(item->{
+                    .stream().map(item -> {
                         SysUserRole sysUserRole = new SysUserRole();
                         sysUserRole.setRoleId(sysRoleBindUserParam.getRoleId());
                         sysUserRole.setUserId(item);
@@ -90,10 +88,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                     }).collect(Collectors.toList());
             sysUserRoleService.saveBatch(addUserRoles);
         }
-        if(sysRoleBindUserParam.getDelUserList().size() > 0){
+        if (sysRoleBindUserParam.getDelUserList().size() > 0) {
             LambdaQueryWrapper<SysUserRole> roleUserWrapper = new LambdaQueryWrapper<>();
-            roleUserWrapper.eq(SysUserRole::getRoleId,sysRoleBindUserParam.getRoleId())
-                    .in(SysUserRole::getUserId,sysRoleBindUserParam.getDelUserList());
+            roleUserWrapper.eq(SysUserRole::getRoleId, sysRoleBindUserParam.getRoleId())
+                    .in(SysUserRole::getUserId, sysRoleBindUserParam.getDelUserList());
             sysUserRoleService.remove(roleUserWrapper);
         }
         return true;
@@ -101,14 +99,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     /**
      * 角色绑定或者解除绑定菜单
-     * @param roleId 角色
+     *
+     * @param roleId      角色
      * @param addMenuList 绑定菜单
      * @param delMenuList 解绑菜单
      */
-    private void addOrDelMenus(Long roleId,List<Long> addMenuList,List<Long> delMenuList){
-        if(addMenuList.size() > 0){
+    private void addOrDelMenus(Long roleId, List<Long> addMenuList, List<Long> delMenuList) {
+        if (addMenuList.size() > 0) {
             List<SysRoleMenu> addMenus = addMenuList
-                    .stream().map(item->{
+                    .stream().map(item -> {
                         SysRoleMenu roleMenu = new SysRoleMenu();
                         roleMenu.setRoleId(roleId);
                         roleMenu.setMenuId(item);
@@ -116,11 +115,26 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                     }).collect(Collectors.toList());
             sysRoleMenuService.saveBatch(addMenus);
         }
-        if(delMenuList.size() > 0){
+        if (delMenuList.size() > 0) {
             LambdaQueryWrapper<SysRoleMenu> roleUserWrapper = new LambdaQueryWrapper<>();
-            roleUserWrapper.eq(SysRoleMenu::getRoleId,roleId).in(SysRoleMenu::getMenuId,delMenuList);
+            roleUserWrapper.eq(SysRoleMenu::getRoleId, roleId).in(SysRoleMenu::getMenuId, delMenuList);
             sysRoleMenuService.remove(roleUserWrapper);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delete(Long id) {
+        LambdaQueryWrapper<SysUserRole> sysUserRoleWrapper = new LambdaQueryWrapper<>();
+        sysUserRoleWrapper.eq(SysUserRole::getRoleId, id);
+        List<SysUserRole> list = sysUserRoleService.list(sysUserRoleWrapper);
+        if (list.size() > 0) {
+            LOGGER.error("角色已绑定用户，不可删除！");
+        }
+        LambdaQueryWrapper<SysRoleMenu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysRoleMenu::getRoleId, id);
+        sysRoleMenuService.remove(wrapper);
+        return removeById(id);
     }
 
 }
