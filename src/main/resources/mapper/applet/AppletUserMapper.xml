@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidatec.monomer.modules.applet.mapper.AppletUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yidatec.monomer.modules.applet.entity.AppletUser">
+        <result column="username" property="username" />
+        <result column="real_name" property="realName" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="gender" property="gender" />
+        <result column="birthday" property="birthday" />
+        <result column="id_card" property="idCard" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="detail_address" property="detailAddress" />
+    </resultMap>
+
+</mapper>
