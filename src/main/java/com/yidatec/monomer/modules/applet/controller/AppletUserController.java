@@ -8,6 +8,7 @@ import com.yidatec.monomer.modules.applet.dto.AppletIntegralParam;
 import com.yidatec.monomer.modules.applet.dto.AppletUserParam;
 import com.yidatec.monomer.modules.applet.entity.AppletUser;
 import com.yidatec.monomer.modules.applet.service.AppletUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ import static com.yidatec.monomer.common.constant.Const._DEFAULT_PAGE_SIZE;
  * @since 2022-08-04
  */
 @RestController
+@Api(tags = "AppletUserController", description = "会员管理")
 @RequestMapping("/applet/appletUser")
 public class AppletUserController {
 
@@ -84,6 +86,7 @@ public class AppletUserController {
         }
         return CommonResult.success(appletUser);
     }
+
     @ApiOperation(value = "消费会员积分")
     @PostMapping(value = "/payIntegral")
     public CommonResult<AppletUser> payIntegral(@RequestBody AppletIntegralParam appletIntegralParam) {

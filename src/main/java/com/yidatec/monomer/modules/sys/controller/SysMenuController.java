@@ -36,7 +36,6 @@ public class SysMenuController {
     @GetMapping(value = "/getRoleMenuList")
     public CommonResult<List<SysMenuTree>> getRoleMenuList() {
          List<SysMenuTree> roleMenuList = sysMenuService.getRoleMenuList();
-        System.out.println(roleMenuList);
         return CommonResult.success(roleMenuList);
     }
 

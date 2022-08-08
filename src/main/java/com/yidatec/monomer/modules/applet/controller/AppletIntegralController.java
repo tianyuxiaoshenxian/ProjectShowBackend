@@ -8,6 +8,7 @@ import com.yidatec.monomer.modules.applet.entity.AppletIntegral;
 import com.yidatec.monomer.modules.applet.entity.AppletUser;
 import com.yidatec.monomer.modules.applet.service.AppletIntegralService;
 import com.yidatec.monomer.modules.applet.vo.AppletIntegralVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ import static com.yidatec.monomer.common.constant.Const._DEFAULT_PAGE_SIZE;
  * @since 2022-08-05
  */
 @RestController
+@Api(tags = "AppletIntegralController", description = "消费记录")
 @RequestMapping("/applet/appletIntegral")
 public class AppletIntegralController {
 

@@ -38,4 +38,6 @@ public class AppletUserParam {
     private String district;
     @ApiModelProperty(value = "详细地址")
     private String detailAddress;
+    @ApiModelProperty(value = "站点id")
+    private String siteId;
 }

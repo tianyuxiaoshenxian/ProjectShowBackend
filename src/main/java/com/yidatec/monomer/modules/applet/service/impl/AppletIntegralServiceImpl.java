@@ -32,13 +32,13 @@ public class AppletIntegralServiceImpl extends ServiceImpl<AppletIntegralMapper,
     @Override
     public Page<AppletIntegralVo> list(String username, String realName, String phoneNumber, String idCard, Integer pageSize, Integer pageNum) {
         Page<AppletIntegralVo> page = new Page<>(pageNum, pageSize);
-        return appletIntegralMapper.list(username,realName,phoneNumber,idCard,page);
+        return appletIntegralMapper.list(username, realName, phoneNumber, idCard, page);
     }
 
     @Override
-    public AppletIntegral addRecord(){
+    public AppletIntegral addRecord() {
         AppletIntegral appletIntegral = new AppletIntegral();
-        if (!save(appletIntegral)){
+        if (!save(appletIntegral)) {
             LOGGER.error("消费记录添加失败！");
         }
         return appletIntegral;

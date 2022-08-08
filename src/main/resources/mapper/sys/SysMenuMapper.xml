@@ -16,7 +16,7 @@ order by sort asc
         <where>
             e.username = #{userName}
         </where>
-        ORDER BY a.id,a.parent_id,a.sort
+        ORDER BY a.sort asc
     </select>
 
     <select id="getRoleCheckedMenuList" resultType="java.lang.Long">

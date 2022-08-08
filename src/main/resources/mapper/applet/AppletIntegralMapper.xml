@@ -19,37 +19,38 @@
 
     <select id="list" resultType="com.yidatec.monomer.modules.applet.vo.AppletIntegralVo">
         select
-            ai.id,
-            ai.integral,
-            ai.type,
-            ai.reason,
-            ai.object_id,
-            ai.create_user,
-            ai.create_time,
-            ai.update_user,
-            ai.update_user,
-            ai.update_time,
-            au.id userId,
-            au.username,
-            au.real_name,
-            au.phone_number,
-            au.id_card,
-            au.integral integralTotal
+        ai.id,
+        ai.integral,
+        ai.type,
+        ai.reason,
+        ai.object_id,
+        ai.create_user,
+        ai.create_time,
+        ai.update_user,
+        ai.update_user,
+        ai.update_time,
+        au.id userId,
+        au.username,
+        au.real_name,
+        au.phone_number,
+        au.id_card,
+        au.integral integralTotal
         from applet_integral ai
         left join applet_user au on ai.user_id = au.id
-        where
-        <if test="username != null and username != ''">
-            and au.username = #{username}
-        </if>
-        <if test="realName != null and realName != ''">
-            and au.real_name = #{realName}
-        </if>
-        <if test="phoneNumber != null and phoneNumber != ''">
-            and au.phone_number = #{phoneNumber}
-        </if>
-        <if test="idCard != null and idCard != ''">
-            and au.id_card = #{idCard}
-        </if>
+        <where>
+            <if test="username != null and username != ''">
+                and au.username = #{username}
+            </if>
+            <if test="realName != null and realName != ''">
+                and au.real_name = #{realName}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and au.phone_number = #{phoneNumber}
+            </if>
+            <if test="idCard != null and idCard != ''">
+                and au.id_card = #{idCard}
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -11,11 +11,13 @@ import com.yidatec.monomer.modules.applet.dto.SiteEditParam;
 import com.yidatec.monomer.modules.applet.dto.SiteParam;
 import com.yidatec.monomer.modules.applet.entity.AppletIntegral;
 import com.yidatec.monomer.modules.applet.entity.AppletUser;
+import com.yidatec.monomer.modules.applet.entity.AppletUserSite;
 import com.yidatec.monomer.modules.applet.entity.Site;
 import com.yidatec.monomer.modules.applet.mapper.AppletUserMapper;
 import com.yidatec.monomer.modules.applet.service.AppletIntegralService;
 import com.yidatec.monomer.modules.applet.service.AppletUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yidatec.monomer.modules.applet.service.AppletUserSiteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +39,11 @@ public class AppletUserServiceImpl extends ServiceImpl<AppletUserMapper, AppletU
 
     @Autowired
     private AppletIntegralService appletIntegralService;
+
+    @Autowired
+    private AppletUserSiteService appletUserSiteService;
+
+    private final int DEL = 0;
     @Override
     public Page<AppletUser> list(String username, String realName, String phoneNumber, String idCard,Integer pageSize, Integer pageNum) {
         Page<AppletUser> page = new Page<>(pageNum, pageSize);
@@ -49,6 +56,7 @@ public class AppletUserServiceImpl extends ServiceImpl<AppletUserMapper, AppletU
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AppletUser register(AppletUserParam appletUserParam) {
         AppletUser appletUser = new AppletUser();
         BeanUtils.copyProperties(appletUserParam, appletUser);
@@ -56,10 +64,15 @@ public class AppletUserServiceImpl extends ServiceImpl<AppletUserMapper, AppletU
             LOGGER.error("注册会员失败！");
             return null;
         }
+        AppletUserSite appletUserSite = new AppletUserSite();
+        appletUserSite.setUserId(appletUser.getId());
+        appletUserSite.setSiteId(appletUserParam.getSiteId());
+        appletUserSiteService.save(appletUserSite);
         return appletUser;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AppletUser editAppletUser(AppletUserParam appletUserParam) {
         AppletUser appletUser = new AppletUser();
         BeanUtils.copyProperties(appletUserParam, appletUser);
@@ -67,6 +80,12 @@ public class AppletUserServiceImpl extends ServiceImpl<AppletUserMapper, AppletU
             LOGGER.error("更新会员信息失败！");
             return null;
         }
+        QueryWrapper<AppletUserSite> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(AppletUserSite::getUserId,appletUserParam.getId())
+                .eq(AppletUserSite::getDel,DEL);
+        AppletUserSite appletUserSite = appletUserSiteService.list(wrapper).get(0);
+        appletUserSite.setSiteId(appletUserParam.getSiteId());
+        appletUserSiteService.updateById(appletUserSite);
         return appletUser;
     }
 

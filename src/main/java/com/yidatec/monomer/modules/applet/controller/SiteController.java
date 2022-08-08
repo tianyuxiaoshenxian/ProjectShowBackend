@@ -1,7 +1,6 @@
 package com.yidatec.monomer.modules.applet.controller;
 
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yidatec.monomer.common.api.CommonPage;
 import com.yidatec.monomer.common.api.CommonResult;
@@ -9,6 +8,7 @@ import com.yidatec.monomer.modules.applet.dto.SiteEditParam;
 import com.yidatec.monomer.modules.applet.dto.SiteParam;
 import com.yidatec.monomer.modules.applet.entity.Site;
 import com.yidatec.monomer.modules.applet.service.SiteService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +26,7 @@ import static com.yidatec.monomer.common.constant.Const._DEFAULT_PAGE_SIZE;
  * @since 2022-08-03
  */
 @RestController
+@Api(tags = "SiteController", description = "站点管理")
 @RequestMapping("/sys/site")
 public class SiteController {
 
@@ -35,13 +36,13 @@ public class SiteController {
     @ApiOperation(value = "查询站点")
     @GetMapping(value = "/list")
     public CommonResult<CommonPage<Site>> list(
-            @RequestParam(value = "province",required = false) String province,
-            @RequestParam(value = "city",required = false) String city,
-            @RequestParam(value = "district",required = false) String district,
-            @RequestParam(value = "hospitalName",required = false) String hospitalName,
+            @RequestParam(value = "province", required = false) String province,
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "district", required = false) String district,
+            @RequestParam(value = "hospitalName", required = false) String hospitalName,
             @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<Site> sitePage = siteService.list(province,city,district,hospitalName,pageSize, pageNum);
+        Page<Site> sitePage = siteService.list(province, city, district, hospitalName, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(sitePage));
     }
 

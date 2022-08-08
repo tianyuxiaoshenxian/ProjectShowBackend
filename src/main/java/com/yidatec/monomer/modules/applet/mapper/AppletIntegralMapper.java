@@ -18,9 +18,9 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface AppletIntegralMapper extends BaseMapper<AppletIntegral> {
 
-    Page<AppletIntegralVo> list(@Param("username")String username,
+    Page<AppletIntegralVo> list(@Param("username") String username,
                                 @Param("realName") String realName,
-                                @Param("phoneNumber")String phoneNumber,
-                                @Param("idCard")String idCard,
+                                @Param("phoneNumber") String phoneNumber,
+                                @Param("idCard") String idCard,
                                 Page page);
 }
