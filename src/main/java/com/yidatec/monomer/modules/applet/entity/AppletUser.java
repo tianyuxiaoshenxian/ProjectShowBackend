@@ -61,5 +61,7 @@ public class AppletUser implements Serializable {
     @ApiModelProperty(value = "详细地址")
     private String detailAddress;
 
+    @ApiModelProperty(value = "积分")
+    private Integer integral;
 
 }

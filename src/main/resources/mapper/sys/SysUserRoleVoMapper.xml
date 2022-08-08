@@ -3,7 +3,10 @@
 <mapper namespace="com.yidatec.monomer.modules.sys.mapper.SysUserRoleVoMapper">
 
     <select id="findByPage" resultType="com.yidatec.monomer.modules.sys.vo.SysUserRoleVo">
-        select a.*,b.id role from sys_user a
-        left join sys_user_role b on a.id = b.user_id and b.role_id = ${role}
+        select a.*, b.id role
+        from sys_user a
+                 left join sys_user_role b on a.id = b.user_id and b.role_id = ${role}
+        where a.del = '0'
+            ${ew.customSqlSegment}
     </select>
 </mapper>

@@ -35,7 +35,9 @@ public class SysMenuController {
     @ApiOperation(value = "查询当前人菜单")
     @GetMapping(value = "/getRoleMenuList")
     public CommonResult<List<SysMenuTree>> getRoleMenuList() {
-        return CommonResult.success(sysMenuService.getRoleMenuList());
+         List<SysMenuTree> roleMenuList = sysMenuService.getRoleMenuList();
+        System.out.println(roleMenuList);
+        return CommonResult.success(roleMenuList);
     }
 
     @ApiOperation(value = "查询勾选菜单")

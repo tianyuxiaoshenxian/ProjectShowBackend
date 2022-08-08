@@ -4,6 +4,7 @@ package com.yidatec.monomer.modules.applet.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yidatec.monomer.common.api.CommonPage;
 import com.yidatec.monomer.common.api.CommonResult;
+import com.yidatec.monomer.modules.applet.dto.AppletIntegralParam;
 import com.yidatec.monomer.modules.applet.dto.AppletUserParam;
 import com.yidatec.monomer.modules.applet.entity.AppletUser;
 import com.yidatec.monomer.modules.applet.service.AppletUserService;
@@ -39,7 +40,7 @@ public class AppletUserController {
             @RequestParam(value = "idCard", required = false) String idCard,
             @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<AppletUser> appletUserPage = appletUserService.list(username,realName,phoneNumber,idCard,pageSize, pageNum);
+        Page<AppletUser> appletUserPage = appletUserService.list(username, realName, phoneNumber, idCard, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(appletUserPage));
     }
 
@@ -72,6 +73,25 @@ public class AppletUserController {
         } else {
             return CommonResult.failed();
         }
+    }
+
+    @ApiOperation(value = "增加会员积分")
+    @PostMapping(value = "/plusIntegral")
+    public CommonResult<AppletUser> plusIntegral(@RequestBody AppletIntegralParam appletIntegralParam) {
+        AppletUser appletUser = appletUserService.plusIntegral(appletIntegralParam);
+        if (null == appletUser) {
+            return CommonResult.failed();
+        }
+        return CommonResult.success(appletUser);
+    }
+    @ApiOperation(value = "消费会员积分")
+    @PostMapping(value = "/payIntegral")
+    public CommonResult<AppletUser> payIntegral(@RequestBody AppletIntegralParam appletIntegralParam) {
+        AppletUser appletUser = appletUserService.payIntegral(appletIntegralParam);
+        if (null == appletUser) {
+            return CommonResult.failed();
+        }
+        return CommonResult.success(appletUser);
     }
 
 

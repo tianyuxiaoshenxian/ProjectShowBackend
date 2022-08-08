@@ -13,6 +13,7 @@
         <result column="province" property="province" />
         <result column="city" property="city" />
         <result column="detail_address" property="detailAddress" />
+        <result column="integral" property="integral" />
     </resultMap>
 
 </mapper>

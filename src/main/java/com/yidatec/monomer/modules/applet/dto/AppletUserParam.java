@@ -34,6 +34,8 @@ public class AppletUserParam {
     private String province;
     @ApiModelProperty(value = "市")
     private String city;
+    @ApiModelProperty(value = "区")
+    private String district;
     @ApiModelProperty(value = "详细地址")
     private String detailAddress;
 }

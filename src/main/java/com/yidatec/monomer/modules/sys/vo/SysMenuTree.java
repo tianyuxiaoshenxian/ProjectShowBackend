@@ -45,6 +45,19 @@ public class SysMenuTree implements Serializable {
     @ApiModelProperty(value = "已选")
     private Boolean checked;
 
+    @ApiModelProperty(value = "路径")
+    private String path;
+    @ApiModelProperty(value = "组件")
+    private String component;
+    @ApiModelProperty(value = "媒体名字")
+    private String meta;
+    @ApiModelProperty(value = "路由名称")
+    private String title;
+    @ApiModelProperty(value = "是否一直显示")
+    private Integer alwaysShow;
+    @ApiModelProperty(value = "是否隐藏菜单")
+    private Integer hidden;
+
     @ApiModelProperty(value = "子菜单")
     private List<SysMenuTree> children;
 }

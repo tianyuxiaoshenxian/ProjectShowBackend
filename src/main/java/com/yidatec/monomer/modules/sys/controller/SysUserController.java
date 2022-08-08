@@ -77,9 +77,13 @@ public class SysUserController {
     @ApiOperation(value = "根据指定角色查询用户列表")
     @GetMapping(value = "/listByRole")
     public CommonResult<CommonPage<SysUserRoleVo>> listByRole(@RequestParam(value = "role") String role,
+                                                              @RequestParam(value = "username",required = false) String username,
+                                                              @RequestParam(value = "realName",required = false) String realName,
+                                                              @RequestParam(value = "email",required = false) String email,
+                                                              @RequestParam(value = "mobile",required = false) String mobile,
                                                               @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
                                                               @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<SysUserRoleVo> userList = sysUserCustomerService.listByRole(role, pageSize, pageNum);
+        Page<SysUserRoleVo> userList = sysUserCustomerService.listByRole(role,username,realName,email,mobile, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(userList));
     }
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidatec.monomer.modules.applet.mapper.AppletIntegralMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yidatec.monomer.modules.applet.entity.AppletIntegral">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="integral" property="integral"/>
+        <result column="type" property="type"/>
+        <result column="reason" property="reason"/>
+        <result column="object_id" property="objectId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="del" property="del"/>
+    </resultMap>
+
+    <select id="list" resultType="com.yidatec.monomer.modules.applet.vo.AppletIntegralVo">
+        select
+            ai.id,
+            ai.integral,
+            ai.type,
+            ai.reason,
+            ai.object_id,
+            ai.create_user,
+            ai.create_time,
+            ai.update_user,
+            ai.update_user,
+            ai.update_time,
+            au.id userId,
+            au.username,
+            au.real_name,
+            au.phone_number,
+            au.id_card,
+            au.integral integralTotal
+        from applet_integral ai
+        left join applet_user au on ai.user_id = au.id
+        where
+        <if test="username != null and username != ''">
+            and au.username = #{username}
+        </if>
+        <if test="realName != null and realName != ''">
+            and au.real_name = #{realName}
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            and au.phone_number = #{phoneNumber}
+        </if>
+        <if test="idCard != null and idCard != ''">
+            and au.id_card = #{idCard}
+        </if>
+    </select>
+
+</mapper>
