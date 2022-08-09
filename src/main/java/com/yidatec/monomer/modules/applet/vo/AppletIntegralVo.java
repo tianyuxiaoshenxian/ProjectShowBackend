@@ -1,13 +1,22 @@
 package com.yidatec.monomer.modules.applet.vo;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class AppletIntegralVo  implements Serializable {
 
-    private static final long serialVersionUID = -1L;
+/**
+ * 消费记录参数
+ *
+ * @author xbr
+ * @since 2022-08-09
+ */
+@Getter
+@Setter
+public class AppletIntegralVo {
+
     @ApiModelProperty(value = "id")
     private String id;
 
