@@ -10,6 +10,7 @@ import com.yidatec.monomer.modules.applet.entity.AppletUser;
 import com.yidatec.monomer.modules.applet.mapper.AppletDeliveryAddressMapper;
 import com.yidatec.monomer.modules.applet.service.AppletDeliveryAddressService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yidatec.monomer.modules.applet.vo.AppletDeliveryAddressVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -28,12 +29,14 @@ public class AppletDeliveryAddressServiceImpl extends ServiceImpl<AppletDelivery
     private static final Logger LOGGER = LoggerFactory.getLogger(AppletDeliveryAddressServiceImpl.class);
 
     @Override
-    public Page<AppletDeliveryAddress> list(String username, String realName, String telephone, Integer pageSize, Integer pageNum) {
+    public Page<AppletDeliveryAddressVo> list(String username, String realName, String telephone, Integer pageSize, Integer pageNum) {
         Page<AppletDeliveryAddress> page = new Page<>(pageNum, pageSize);
         QueryWrapper<AppletDeliveryAddress> wrapper = new QueryWrapper<>();
         wrapper.like(StrUtil.isNotEmpty(realName),"real_name",realName)
                 .like(StrUtil.isNotEmpty(telephone),"telephone",telephone);
-        return page(page, wrapper);
+        Page<AppletDeliveryAddressVo> appletDeliveryAddressVoPage = new Page<>(pageNum, pageSize);
+        BeanUtils.copyProperties(page(page, wrapper), appletDeliveryAddressVoPage);
+        return appletDeliveryAddressVoPage;
     }
 
     @Override

@@ -11,12 +11,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public abstract class AbstractEntity extends AbstractFatherEntity implements Serializable {
+public abstract class AbstractFatherEntity implements Serializable {
 
     private static final long serialVersionUID=1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

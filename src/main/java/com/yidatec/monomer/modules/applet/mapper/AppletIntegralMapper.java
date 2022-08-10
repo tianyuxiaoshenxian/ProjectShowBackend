@@ -23,4 +23,6 @@ public interface AppletIntegralMapper extends BaseMapper<AppletIntegral> {
                                 @Param("phoneNumber") String phoneNumber,
                                 @Param("idCard") String idCard,
                                 Page page);
+
+    Page<AppletIntegralVo> personalList(Page page);
 }

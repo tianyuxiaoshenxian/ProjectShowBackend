@@ -10,10 +10,6 @@
         <result column="type" property="type"/>
         <result column="reason" property="reason"/>
         <result column="object_id" property="objectId"/>
-        <result column="create_user" property="createUser"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_user" property="updateUser"/>
-        <result column="update_time" property="updateTime"/>
         <result column="del" property="del"/>
     </resultMap>
 
@@ -51,6 +47,28 @@
                 and au.id_card = #{idCard}
             </if>
         </where>
+    </select>
+
+    <select id="personalList" resultType="com.yidatec.monomer.modules.applet.vo.AppletIntegralVo">
+        select
+        ai.id,
+        ai.integral,
+        ai.type,
+        ai.reason,
+        ai.object_id,
+        ai.create_user,
+        ai.create_time,
+        ai.update_user,
+        ai.update_user,
+        ai.update_time,
+        au.id userId,
+        au.username,
+        au.real_name,
+        au.phone_number,
+        au.id_card,
+        au.integral integralTotal
+        from applet_integral ai
+        left join applet_user au on ai.user_id = au.id
     </select>
 
 </mapper>

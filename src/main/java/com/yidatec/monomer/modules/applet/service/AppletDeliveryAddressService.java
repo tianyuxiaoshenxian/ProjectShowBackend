@@ -6,6 +6,7 @@ import com.yidatec.monomer.modules.applet.dto.AppletUserParam;
 import com.yidatec.monomer.modules.applet.entity.AppletDeliveryAddress;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yidatec.monomer.modules.applet.entity.AppletUser;
+import com.yidatec.monomer.modules.applet.vo.AppletDeliveryAddressVo;
 
 /**
  * <p>
@@ -17,7 +18,7 @@ import com.yidatec.monomer.modules.applet.entity.AppletUser;
  */
 public interface AppletDeliveryAddressService extends IService<AppletDeliveryAddress> {
 
-    Page<AppletDeliveryAddress> list(String username, String realName, String telephone, Integer pageSize, Integer pageNum);
+    Page<AppletDeliveryAddressVo> list(String username, String realName, String telephone, Integer pageSize, Integer pageNum);
 
     AppletDeliveryAddress addAddress(AppletDeliveryAddressParam appletDeliveryAddressParam);
 

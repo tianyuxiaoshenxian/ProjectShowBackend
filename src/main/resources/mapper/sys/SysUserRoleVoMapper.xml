@@ -5,8 +5,21 @@
     <select id="findByPage" resultType="com.yidatec.monomer.modules.sys.vo.SysUserRoleVo">
         select a.*, b.id role
         from sys_user a
-                 left join sys_user_role b on a.id = b.user_id and b.role_id = ${role}
-        where a.del = '0'
-            ${ew.customSqlSegment}
+        left join sys_user_role b on a.id = b.user_id and b.role_id = ${role}
+        <where>
+            a.del = '0'
+            <if test="username != null and username != ''">
+                and a.username like concat('%',#{username},'%')
+            </if>
+            <if test="realName != null and realName != ''">
+                and a.real_name like concat('%',#{realName},'%')
+            </if>
+            <if test="email != null and email != ''">
+                and a.email like concat('%',#{email},'%')
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and a.mobile like concat('%',#{mobile},'%')
+            </if>
+        </where>
     </select>
 </mapper>

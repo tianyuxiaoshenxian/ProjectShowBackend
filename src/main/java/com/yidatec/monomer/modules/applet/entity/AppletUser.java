@@ -64,4 +64,6 @@ public class AppletUser implements Serializable {
     @ApiModelProperty(value = "积分")
     private Integer integral;
 
+    @ApiModelProperty(value = "删除状态：0->正常；1->已删除")
+    private Integer del;
 }

@@ -5,11 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yidatec.monomer.common.api.CommonPage;
 import com.yidatec.monomer.common.api.CommonResult;
 import com.yidatec.monomer.modules.applet.dto.AppletDeliveryAddressParam;
-import com.yidatec.monomer.modules.applet.dto.AppletUserParam;
 import com.yidatec.monomer.modules.applet.entity.AppletDeliveryAddress;
-import com.yidatec.monomer.modules.applet.entity.AppletUser;
 import com.yidatec.monomer.modules.applet.service.AppletDeliveryAddressService;
-import com.yidatec.monomer.modules.applet.service.AppletUserService;
+import com.yidatec.monomer.modules.applet.vo.AppletDeliveryAddressVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +35,13 @@ public class AppletDeliveryAddressController {
 
     @ApiOperation(value = "查询收货地址")
     @GetMapping(value = "/list")
-    public CommonResult<CommonPage<AppletDeliveryAddress>> list(
+    public CommonResult<CommonPage<AppletDeliveryAddressVo>> list(
             @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "realName", required = false) String realName,
             @RequestParam(value = "telephone", required = false) String telephone,
             @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
-        Page<AppletDeliveryAddress> appletUserPage = appletDeliveryAddressService.list(username, realName, telephone, pageSize, pageNum);
+        Page<AppletDeliveryAddressVo> appletUserPage = appletDeliveryAddressService.list(username, realName, telephone, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(appletUserPage));
     }
 
@@ -66,6 +64,7 @@ public class AppletDeliveryAddressController {
         }
         return CommonResult.success(appletDeliveryAddress);
     }
+
     @ApiOperation(value = "删除收货地址")
     @PostMapping(value = "/delete/{id}")
     public CommonResult delete(@PathVariable String id) {

@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Param;
  * @since 2022-05-24
  */
 public interface SysUserRoleVoMapper extends BaseMapper<SysUserRoleVo> {
-    Page<SysUserRoleVo> findByPage(Page<SysUserRoleVo> page, String role, @Param(Constants.WRAPPER) Wrapper<SysUserRoleVo> wrapper);
+//    Page<SysUserRoleVo> findByPage(Page<SysUserRoleVo> page, String role, @Param(Constants.WRAPPER) Wrapper<SysUserRoleVo> wrapper);
 
-    Page<SysUserRoleVo> findByPage(Page<SysUserRoleVo> page, String role);
+    Page<SysUserRoleVo> findByPage(Page<SysUserRoleVo> page, String role,String username, String realName, String email, String mobile);
 }

@@ -18,6 +18,7 @@ public interface AppletIntegralService extends IService<AppletIntegral> {
 
     Page<AppletIntegralVo> list(String username, String realName, String phoneNumber, String idCard, Integer pageSize, Integer pageNum);
 
+    Page<AppletIntegralVo> personalList(Integer pageSize, Integer pageNum);
     AppletIntegral addRecord();
 
 

@@ -49,5 +49,14 @@ public class AppletIntegralController {
         return CommonResult.success(CommonPage.restPage(appletIntegrals));
     }
 
+    @ApiOperation(value = "会员个人积分记录")
+    @GetMapping(value = "/personalList")
+    public CommonResult<CommonPage<AppletIntegralVo>> personalList(
+            @RequestParam(value = "pageSize", defaultValue = _DEFAULT_PAGE_SIZE) Integer pageSize,
+            @RequestParam(value = "pageNum", defaultValue = _DEFAULT_PAGE_NUM) Integer pageNum) {
+        Page<AppletIntegralVo> appletIntegrals = appletIntegralService.personalList(pageSize,pageNum);
+        return CommonResult.success(CommonPage.restPage(appletIntegrals));
+    }
+
 }
 

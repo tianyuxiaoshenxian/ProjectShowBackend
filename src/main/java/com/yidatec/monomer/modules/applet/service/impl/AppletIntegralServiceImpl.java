@@ -36,6 +36,13 @@ public class AppletIntegralServiceImpl extends ServiceImpl<AppletIntegralMapper,
     }
 
     @Override
+    public Page<AppletIntegralVo> personalList(Integer pageSize, Integer pageNum) {
+        Page<AppletIntegralVo> page = new Page<>(pageNum, pageSize);
+
+        return appletIntegralMapper.personalList(page);
+    }
+
+    @Override
     public AppletIntegral addRecord() {
         AppletIntegral appletIntegral = new AppletIntegral();
         if (!save(appletIntegral)) {

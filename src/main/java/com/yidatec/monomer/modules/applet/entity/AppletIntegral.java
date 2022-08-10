@@ -1,12 +1,15 @@
 package com.yidatec.monomer.modules.applet.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -19,13 +22,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("applet_integral")
-@ApiModel(value="AppletIntegral对象", description="小程序会员积分记录")
+@ApiModel(value = "AppletIntegral对象", description = "小程序会员积分记录")
 public class AppletIntegral implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id")
-      private String id;
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String id;
 
     @ApiModelProperty(value = "用户id")
     private String userId;
@@ -41,18 +45,6 @@ public class AppletIntegral implements Serializable {
 
     @ApiModelProperty(value = "积分变动原因管理信息，如订单id")
     private String objectId;
-
-    @ApiModelProperty(value = "创建人")
-    private String createUser;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "更新人")
-    private String updateUser;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
 
     @ApiModelProperty(value = "删除标志 0:存在 1:删除")
     private Integer del;
